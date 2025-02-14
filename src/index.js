@@ -3,10 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import "tailwindcss/base";
-import "tailwindcss/components";
-import "tailwindcss/utilities";
-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
