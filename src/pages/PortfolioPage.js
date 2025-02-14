@@ -40,39 +40,54 @@ const PortfolioPage = () => {
   }, [id, portfolio]); 
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Portfolio {id}</h1>
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
+        <h1 className="text-3xl font-bold text-gray-800 mb-4">Portfolio {id}</h1>
 
-      {portfolio ? (
-        <div className="bg-white p-6 shadow-lg rounded-lg">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Portfolio Details</h2>
-          <pre className="bg-gray-100 p-4 rounded-md text-gray-700">
-            {JSON.stringify(portfolio, null, 2)}
-          </pre>
-        </div>
-      ) : (
-        <p className="text-gray-600">Loading portfolio...</p>
-      )}
+        {portfolio ? (
+          <div className="mb-6 p-4 bg-gray-50 border rounded-lg shadow-sm">
+            <h2 className="text-2xl font-semibold text-gray-700 mb-2">Portfolio Details</h2>
+            <pre className="text-gray-600 bg-gray-200 p-3 rounded-lg overflow-x-auto">
+              {JSON.stringify(portfolio, null, 2)}
+            </pre>
+          </div>
+        ) : (
+          <p className="text-gray-500">Loading portfolio...</p>
+        )}
 
-      {assets.length > 0 ? (
-        <div className="mt-6 bg-white p-6 shadow-lg rounded-lg">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Assets</h2>
-          <ul className="divide-y divide-gray-300">
-            {assets.map((asset) => (
-              <li key={asset.id} className="py-4 flex justify-between items-center">
-                <p className="text-gray-700 font-medium">{asset.name}</p>
-                <p className="text-gray-500">
-                  Price: <span className="font-semibold">{asset.market_price || "N/A"}</span>
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <p className="text-gray-600 mt-4">Loading assets...</p>
-      )}
+        {assets.length > 0 ? (
+          <div className="mt-6">
+            <h2 className="text-2xl font-semibold text-gray-700 mb-3">Assets</h2>
+            <div className="overflow-x-auto">
+              <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-sm">
+                <thead>
+                  <tr className="bg-gray-200 text-gray-700">
+                    <th className="py-2 px-4 border-b">Name</th>
+                    <th className="py-2 px-4 border-b">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {assets.map((asset) => (
+                    <tr key={asset.id} className="text-gray-600 hover:bg-gray-100">
+                      <td className="py-2 px-4 border-b">{asset.name}</td>
+                      <td className="py-2 px-4 border-b">
+                        {asset.market_price && !isNaN(asset.market_price)
+                        ? `$${Number(asset.market_price).toFixed(2)}`
+                        : "N/A"}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : (
+          <p className="text-gray-500 mt-4">Loading assets...</p>
+        )}
+      </div>
     </div>
   );
 };
+
 
 export default PortfolioPage;
