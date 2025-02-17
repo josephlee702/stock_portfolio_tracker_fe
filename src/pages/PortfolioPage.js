@@ -7,8 +7,9 @@ const PortfolioPage = () => {
   const [portfolio, setPortfolio] = useState(null);
   const [assets, setAssets] = useState([]);
   const [newAsset, setNewAsset] = useState({ symbol: "", name: "", quantity: "", asset_type: "" });
+  const [errorMessage, setErrorMessage] = useState("");
   
-  const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo0fQ.MY_yPhuEQBUXpmbltv41F5CW9teX8HaUraw1msPTD3I";
+  const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2fQ.-XdcSMywrlroe_kS3juSFq7T1vD3c14XhaOgkQrCPMY";
 
   useEffect(() => {
     const fetchPortfolio = async () => {
@@ -33,7 +34,7 @@ const PortfolioPage = () => {
           });
           setAssets(response.data);
         } catch (error) {
-          console.error("Error fetching assets:", error);
+          console.error("Error fetching assets", error);
         }
       };
       fetchAssets();
@@ -54,6 +55,7 @@ const PortfolioPage = () => {
   const handleCreateAsset = async (e) => {
     // prevents the page from reloading when the form is submitted
     e.preventDefault();
+    setErrorMessage("");
 
     try {
       const response = await api.post(`/portfolios/${id}/assets`, newAsset, {
@@ -64,7 +66,13 @@ const PortfolioPage = () => {
 
       setNewAsset({ symbol: "", name: "", quantity: "", asset_type: "" });
     } catch (error) {
-      console.error("Error creating asset:", error);
+      if (error.response) {
+        const errorMsg = error.response.data.errors || "Error creating asset.";
+        setErrorMessage(errorMsg);
+      } 
+      else {
+      setErrorMessage("Error creating asset.");
+      }
     }
   };
 
@@ -74,6 +82,10 @@ const PortfolioPage = () => {
 
     <div className="my-6 p-4 bg-white shadow rounded-lg">
       <h2 className="text-xl font-semibold text-gray-700">Add New Asset</h2>
+      {errorMessage && (
+        <p className="text-red-500 bg-red-100 p-2 rounded">{errorMessage}</p>
+      )}
+
       <form onSubmit={handleCreateAsset} className="mt-4 space-y-4">
       <input
           type="text"
@@ -123,25 +135,22 @@ const PortfolioPage = () => {
     </div>
 
     <div className="my-6 p-4 bg-white shadow rounded-lg">
-      <h2 className="text-xl font-semibold text-gray-700">Assets</h2>
-      {assets.length > 0 ? (
-        <ul className="space-y-4">
-          {assets.map((asset) => (
-            <li key={asset.id} className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
-              <p className="text-lg font-semibold">{asset.symbol}</p>
-              <p className="text-lg font-semibold">{asset.name}</p>
-              <p className="text-gray-700">Price: ${Number(asset.market_price).toFixed(2) || "N/A"}</p>
-            </li>
-          ))}
-        </ul>
-      ) : assets.length === 0 ? (
-        // Optional blank state if no assets exist
-        <p className="text-gray-600">Wow. So empty. </p>
-      ) : (
-        <p className="text-gray-600">Loading assets...</p>
-      )}
+    <h2 className="text-xl font-semibold text-gray-700">Assets</h2>
+    {assets.length > 0 ? (
+      <ul className="space-y-4">
+      {assets.map((asset) => (
+        <li key={asset.id || asset.symbol} className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
+          <p className="text-lg font-semibold">{asset.symbol}</p>
+          <p className="text-lg font-semibold">{asset.name}</p>
+          <p className="text-gray-700">Price: ${Number(asset.market_price).toFixed(2) || "N/A"}</p>
+        </li>
+      ))}
+      </ul>
+    ) : (
+      <p className="text-gray-600">Wow. So empty.</p>
+    )}
     </div>
-  </div> 
+  </div>
   );
 };
 
