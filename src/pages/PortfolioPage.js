@@ -76,6 +76,19 @@ const PortfolioPage = () => {
     }
   };
 
+  const handleDeleteAsset = async (assetId) => {
+    try {
+      const response = await api.delete(`/portfolios/${id}/assets/${assetId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+  
+      setAssets(assets.filter((asset) => asset.id !== assetId));
+  
+    } catch (error) {
+      console.error("Error deleting asset:", error);
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
       <h1 className="text-3xl font-bold text-gray-800"> { portfolio ? portfolio.name : "Portfolio does not exist." } </h1>
@@ -143,6 +156,11 @@ const PortfolioPage = () => {
           <p className="text-lg font-semibold">{asset.symbol}</p>
           <p className="text-lg font-semibold">{asset.name}</p>
           <p className="text-gray-700">Price: ${Number(asset.market_price).toFixed(2) || "N/A"}</p>
+          <button
+            onClick={() => handleDeleteAsset(asset.id)}
+            className="bg-red-600 text-white py-1 px-3 rounded hover:bg-red-700 transition"
+          > Delete
+          </button>
         </li>
       ))}
       </ul>
