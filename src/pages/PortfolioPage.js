@@ -91,8 +91,8 @@ const PortfolioPage = () => {
   };
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold text-gray-800">
+    <div className="container mt-4">
+      <h1 className="display-4 text-dark">
         {portfolio ? portfolio.name : "Portfolio does not exist."}
       </h1>
 

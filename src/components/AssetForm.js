@@ -15,7 +15,7 @@ const AssetForm = ({ newAsset, handleInputChange, handleCreateAsset, errorMessag
           value={newAsset.symbol}
           onChange={handleInputChange}
           placeholder="Asset Symbol"
-          className="w-full p-2 border border-gray-300 rounded"
+          className="form-control"
           required
         />
         <input
@@ -24,7 +24,7 @@ const AssetForm = ({ newAsset, handleInputChange, handleCreateAsset, errorMessag
           value={newAsset.name}
           onChange={handleInputChange}
           placeholder="Asset Name"
-          className="w-full p-2 border border-gray-300 rounded"
+          className="form-control"
           required
         />
         <input
@@ -33,24 +33,21 @@ const AssetForm = ({ newAsset, handleInputChange, handleCreateAsset, errorMessag
           value={newAsset.quantity}
           onChange={handleInputChange}
           placeholder="Quantity"
-          className="w-full p-2 border border-gray-300 rounded"
+          className="form-control"
           required
         />
         <select
           name="asset_type"
           value={newAsset.asset_type}
           onChange={handleInputChange}
-          className="w-full p-2 border border-gray-300 rounded"
+          className="form-control"
           required
         >
           <option value="">Select Asset Type</option>
           <option value="stock">stock</option>
           <option value="crypto">crypto</option>
         </select>
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-        >
+        <button type="submit" className="btn btn-primary w-100">
           Add Asset
         </button>
       </form>
