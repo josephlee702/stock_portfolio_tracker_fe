@@ -1,6 +1,8 @@
 import api from "../services/api"; 
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import AssetForm from "../components/AssetForm";
+import AssetList from "../components/AssetList";
 
 const PortfolioPage = () => {
   const { id } = useParams();
@@ -48,7 +50,6 @@ const PortfolioPage = () => {
         ...prevAsset,
         [name]: value,
       }
-      return updatedAsset;
     });
   };
 
@@ -91,84 +92,19 @@ const PortfolioPage = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
-      <h1 className="text-3xl font-bold text-gray-800"> { portfolio ? portfolio.name : "Portfolio does not exist." } </h1>
+      <h1 className="text-3xl font-bold text-gray-800">
+        {portfolio ? portfolio.name : "Portfolio does not exist."}
+      </h1>
 
-    <div className="my-6 p-4 bg-white shadow rounded-lg">
-      <h2 className="text-xl font-semibold text-gray-700">Add New Asset</h2>
-      {errorMessage && (
-        <p className="text-red-500 bg-red-100 p-2 rounded">{errorMessage}</p>
-      )}
+      <AssetForm
+        newAsset={newAsset}
+        handleInputChange={handleInputChange}
+        handleCreateAsset={handleCreateAsset}
+        errorMessage={errorMessage}
+      />
 
-      <form onSubmit={handleCreateAsset} className="mt-4 space-y-4">
-      <input
-          type="text"
-          name="symbol"
-          value={newAsset.symbol}
-          onChange={handleInputChange}
-          placeholder="Asset Symbol"
-          className="w-full p-2 border border-gray-300 rounded"
-          required
-        />
-        <input
-          type="text"
-          name="name"
-          value={newAsset.name}
-          onChange={handleInputChange}
-          placeholder="Asset Name"
-          className="w-full p-2 border border-gray-300 rounded"
-          required
-        />
-        <input
-          type="number"
-          name="quantity"
-          value={newAsset.quantity}
-          onChange={handleInputChange}
-          placeholder="Quantity"
-          className="w-full p-2 border border-gray-300 rounded"
-          required
-        />
-        <select
-          name="asset_type"
-          value={newAsset.asset_type}
-          onChange={handleInputChange}
-          className="w-full p-2 border border-gray-300 rounded"
-          required
-        >
-          <option value="">Select Asset Type</option>
-          <option value="stock">stock</option>
-          <option value="crypto">crypto</option>
-        </select>
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-        >
-          Add Asset
-        </button>
-      </form>
+      <AssetList assets={assets} handleDeleteAsset={handleDeleteAsset} />
     </div>
-
-    <div className="my-6 p-4 bg-white shadow rounded-lg">
-    <h2 className="text-xl font-semibold text-gray-700">Assets</h2>
-    {assets.length > 0 ? (
-      <ul className="space-y-4">
-      {assets.map((asset) => (
-        <li key={asset.id || asset.symbol} className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
-          <p className="text-lg font-semibold">{asset.symbol}</p>
-          <p className="text-lg font-semibold">{asset.name}</p>
-          <p className="text-gray-700">Price: ${Number(asset.market_price).toFixed(2) || "N/A"}</p>
-          <button
-            onClick={() => handleDeleteAsset(asset.id)}
-            className="bg-red-600 text-white py-1 px-3 rounded hover:bg-red-700 transition"
-          > Delete
-          </button>
-        </li>
-      ))}
-      </ul>
-    ) : (
-      <p className="text-gray-600">Wow. So empty.</p>
-    )}
-    </div>
-  </div>
   );
 };
 
