@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AssetForm = ({ newAsset, handleInputChange, handleCreateAsset, errorMessage }) => {
+const AssetForm = ({ newAsset = {}, handleInputChange, handleCreateAsset, errorMessage }) => {
   return (
     <div className="my-6 p-4 bg-white shadow rounded-lg">
       <h2 className="text-xl font-semibold text-gray-700">Add New Asset</h2>
