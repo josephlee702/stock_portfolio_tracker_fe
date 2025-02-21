@@ -43,14 +43,13 @@ const PortfolioPage = () => {
     }
   }, [id, portfolio]); 
 
+  // updates the state of your Asset object whenever you type input in
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewAsset((prevAsset) => {
-      const updatedAsset = {
-        ...prevAsset,
-        [name]: value,
-      }
-    });
+    setNewAsset((prevAsset) => ({
+      ...prevAsset,
+      [name]: value
+    }));
   };
 
   const handleCreateAsset = async (e) => {
