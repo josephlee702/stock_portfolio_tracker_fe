@@ -9,7 +9,7 @@ const AssetList = ({ assets, handleDeleteAsset }) => {
           {assets.map((asset) => (
             <li key={asset.id} className="list-group-item d-flex justify-content-between align-items-center">
               <div>
-                <h5 className="mb-1">{asset.symbol} ({asset.name})</h5>
+                <h5 className="mb-1">{asset.name} ({asset.symbol})</h5>
                 <p className="mb-1">Price: ${Number(asset.market_price).toFixed(2) || "N/A"}</p>
               </div>
               <button
