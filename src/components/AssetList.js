@@ -3,7 +3,7 @@ import React from 'react';
 const AssetList = ({ assets, handleDeleteAsset }) => {
   return (
     <div className="my-6 p-4 bg-white shadow rounded-lg">
-      <h2 className="text-xl font-semibold text-gray-700">Assets</h2>
+      <h2 className="text-dark">Assets</h2>
       {assets.length > 0 ? (
         <ul className="list-group list-group-flush">
           {assets.map((asset) => (

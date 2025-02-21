@@ -3,7 +3,7 @@ import React from 'react';
 const AssetForm = ({ newAsset = {}, handleInputChange, handleCreateAsset, errorMessage }) => {
   return (
     <div className="my-6 p-4 bg-white shadow rounded-lg">
-      <h2 className="text-xl font-semibold text-gray-700">Add New Asset</h2>
+      <h2 className="text-dark">Add New Asset</h2>
       {errorMessage && (
         <p className="text-red-500 bg-red-100 p-2 rounded">{errorMessage}</p>
       )}
