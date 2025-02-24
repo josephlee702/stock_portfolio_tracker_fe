@@ -11,6 +11,9 @@ const AssetList = ({ assets, handleDeleteAsset }) => {
               <div>
                 <h5 className="mb-1">{asset.name} ({asset.symbol})</h5>
                 <p className="mb-1">Price: ${Number(asset.market_price).toFixed(2) || "N/A"}</p>
+                <p className="mb-1">Quantity: {asset.quantity} shares </p>
+                <p className="mb-1">Total Market Value: ${ (asset.market_price * asset.quantity).toFixed(2) || "N/A" }
+                </p>
               </div>
               <button
                 onClick={() => handleDeleteAsset(asset.id)}
