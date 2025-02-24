@@ -28,7 +28,7 @@ const HomePage = () => {
           {portfolios.map((portfolio) => (
             <li key={portfolio.id} className="list-group-item">
               <h2><Link to={`/portfolios/${portfolio.id}`}>{portfolio.name}</Link></h2>
-              <p>Total Market Value: ${portfolio.total_market_value.toFixed(2)}</p>
+              <p>Total Market Value: ${portfolio.total_market_value.toFixed(2).toLocaleString()}</p>
             </li>
           ))}
         </ul>
