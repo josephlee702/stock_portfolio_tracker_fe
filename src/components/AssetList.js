@@ -12,7 +12,8 @@ const AssetList = ({ assets, handleDeleteAsset }) => {
                 <h5 className="mb-1">{asset.name} ({asset.symbol})</h5>
                 <p className="mb-1">Price: ${Number(asset.market_price).toFixed(2) || "N/A"}</p>
                 <p className="mb-1">Quantity: {asset.quantity} shares </p>
-                <p className="mb-1">Total Market Value: ${ (asset.market_price * asset.quantity).toFixed(2) || "N/A" }
+                {/* lots of funny type business going on here with market_price and quantity - dig into it better to see how the backend is sending over these values */}
+                <p className="mb-1">Total Market Value: ${ (parseFloat(asset.market_price) * parseInt(asset.quantity, 10)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </p>
               </div>
               <button
