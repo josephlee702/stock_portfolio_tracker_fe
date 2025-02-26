@@ -1,6 +1,32 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-const AssetForm = ({ newAsset = {}, handleInputChange, handleCreateAsset, errorMessage }) => {
+const AssetForm = ({ handleCreateAsset, errorMessage }) => {
+  const [newAsset, setNewAsset] = useState({
+    symbol: "",
+    name: "",
+    quantity: "",
+    asset_type: ""
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewAsset((prevAsset) => ({
+      ...prevAsset,
+      [name]: value
+    }));
+  }; 
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    // Capitalizing symbol before submitting so APIs don't get mixed up
+    const assetToSubmit = {
+      ...newAsset,
+      symbol: newAsset.symbol.toUpperCase()
+    };
+    handleCreateAsset(assetToSubmit);
+    setNewAsset({ symbol: "", name: "", quantity: "", asset_type: "" });
+  };
+
   return (
     <div className="my-6 p-4 bg-white shadow rounded-lg">
       <h2 className="text-dark">Add New Asset</h2>
@@ -8,7 +34,7 @@ const AssetForm = ({ newAsset = {}, handleInputChange, handleCreateAsset, errorM
         <p className="text-red-500 bg-red-100 p-2 rounded">{errorMessage}</p>
       )}
 
-      <form onSubmit={handleCreateAsset} className="mt-4 space-y-4">
+      <form onSubmit={onSubmit} className="mt-4 space-y-4">
         <input
           type="text"
           name="symbol"

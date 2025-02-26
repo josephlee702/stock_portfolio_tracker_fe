@@ -8,7 +8,6 @@ const PortfolioPage = ({ darkMode }) => {
   const { id } = useParams();
   const [portfolio, setPortfolio] = useState(null);
   const [assets, setAssets] = useState([]);
-  const [newAsset, setNewAsset] = useState({ symbol: "", name: "", quantity: "", asset_type: "" });
   const [errorMessage, setErrorMessage] = useState("");
   
   const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2fQ.-XdcSMywrlroe_kS3juSFq7T1vD3c14XhaOgkQrCPMY";
@@ -43,18 +42,7 @@ const PortfolioPage = ({ darkMode }) => {
     }
   }, [id, portfolio]); 
 
-  // updates the state of your Asset object whenever you type input in
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewAsset((prevAsset) => ({
-      ...prevAsset,
-      [name]: value
-    }));
-  };
-
-  const handleCreateAsset = async (e) => {
-    // prevents the page from reloading when the form is submitted
-    e.preventDefault();
+  const handleCreateAsset = async (newAsset) => {
     setErrorMessage("");
 
     try {
@@ -63,15 +51,12 @@ const PortfolioPage = ({ darkMode }) => {
       });
 
       setAssets([...assets, response.data]);
-
-      setNewAsset({ symbol: "", name: "", quantity: "", asset_type: "" });
     } catch (error) {
       if (error.response) {
         const errorMsg = error.response.data.errors || "Error creating asset.";
         setErrorMessage(errorMsg);
-      } 
-      else {
-      setErrorMessage("Error creating asset.");
+      } else {
+        setErrorMessage("Error creating asset.");
       }
     }
   };
@@ -96,8 +81,6 @@ const PortfolioPage = ({ darkMode }) => {
       </h1>
 
       <AssetForm
-        newAsset={newAsset}
-        handleInputChange={handleInputChange}
         handleCreateAsset={handleCreateAsset}
         errorMessage={errorMessage}
       />
