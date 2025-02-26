@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../services/api"; 
 import { Link } from "react-router-dom";
 
-const HomePage = () => {
+const HomePage = ({ darkMode }) => {
   const [portfolios, setPortfolios] = useState([]);
   const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2fQ.-XdcSMywrlroe_kS3juSFq7T1vD3c14XhaOgkQrCPMY";
 
@@ -22,7 +22,7 @@ const HomePage = () => {
 
   return (
     <div className="container mt-4">
-      <h1 className="mb-3">Your Portfolios</h1>
+      <h1 className={`display-4 ${darkMode ? "text-light" : "text-dark"}`}> Your Portfolios</h1>
       {portfolios.length > 0 ? (
         <ul className="list-group">
           {portfolios.map((portfolio) => (

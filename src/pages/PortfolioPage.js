@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import AssetForm from "../components/AssetForm";
 import AssetList from "../components/AssetList";
 
-const PortfolioPage = () => {
+const PortfolioPage = ({ darkMode }) => {
   const { id } = useParams();
   const [portfolio, setPortfolio] = useState(null);
   const [assets, setAssets] = useState([]);
@@ -91,7 +91,7 @@ const PortfolioPage = () => {
 
   return (
     <div className="container mt-4">
-      <h1 className="display-4 text-dark">
+      <h1 className={`display-4 ${darkMode ? "text-light" : "text-dark"}`}>
         {portfolio ? portfolio.name : "Portfolio does not exist."}
       </h1>
 
