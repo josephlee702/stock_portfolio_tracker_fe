@@ -47,6 +47,7 @@ const AssetForm = ({ newAsset = {}, handleInputChange, handleCreateAsset, errorM
           <option value="stock">stock</option>
           <option value="crypto">crypto</option>
         </select>
+        <p></p>
         <button type="submit" className="btn btn-primary w-100">
           Add Asset
         </button>
