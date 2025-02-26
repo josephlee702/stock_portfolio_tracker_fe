@@ -7,7 +7,7 @@ const NavBar = ({ darkMode, setDarkMode }) => {
   return (
     <nav className="navbar">
       <div className="nav-links">
-        <Link to="/">Home</Link>
+        <Link to="/" className="ms-3">Home</Link>
         <Link to="/portfolio">Portfolio</Link>
         <Link to="/settings">Settings</Link>
       </div>
