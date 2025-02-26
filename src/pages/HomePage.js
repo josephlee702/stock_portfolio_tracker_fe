@@ -28,7 +28,7 @@ const HomePage = () => {
           {portfolios.map((portfolio) => (
             <li key={portfolio.id} className="list-group-item">
               <h2><Link to={`/portfolios/${portfolio.id}`}>{portfolio.name}</Link></h2>
-              <p>Total Market Value: ${portfolio.total_market_value.toFixed(2).toLocaleString()}</p>
+              <p>Total Market Value: ${parseFloat(portfolio.total_market_value).toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
             </li>
           ))}
         </ul>
@@ -40,3 +40,5 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+{/* <p className="mb-1">Total Market Value: ${ (parseFloat(asset.market_price) * parseFloat(asset.quantity, 10)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} */}
