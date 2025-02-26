@@ -40,5 +40,3 @@ const HomePage = ({ darkMode }) => {
 };
 
 export default HomePage;
-
-{/* <p className="mb-1">Total Market Value: ${ (parseFloat(asset.market_price) * parseFloat(asset.quantity, 10)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} */}
