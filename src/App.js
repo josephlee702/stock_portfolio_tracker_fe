@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PortfolioPage from "./pages/PortfolioPage";
 import HomePage from "./pages/HomePage";
 import NavBar from "./components/NavBar";
+import Signup from "./components/Signup";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
       <main className="p-4">
         <Routes>
           <Route path="/" element={<HomePage darkMode={darkMode} />} />
+          <Route path="/signup" element={<Signup/>} />
           <Route path="/portfolios/:id" element={<PortfolioPage darkMode={darkMode} />} />
         </Routes>
       </main>
