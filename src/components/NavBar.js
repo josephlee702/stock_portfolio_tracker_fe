@@ -21,7 +21,7 @@ const NavBar = ({ darkMode, setDarkMode }) => {
       ) : (
         <>
           <Link to="/login"> Log In </Link>
-          <Link to="/register">Register</Link>
+          <Link to="/signup">Sign Up</Link>
         </>
       )}
       <div className="ms-auto">
