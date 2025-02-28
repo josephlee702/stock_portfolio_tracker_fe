@@ -15,7 +15,7 @@ const NavBar = ({ darkMode, setDarkMode }) => {
       <Link to="/">Home</Link>
 
       {token ? (
-        <button onClick={handleLogout} className="btn btn-danger">
+        <button onClick={handleLogout} className="btn btn-primary rounded-pill">
           Logout
         </button>
       ) : (
