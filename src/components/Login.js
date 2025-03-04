@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/Authcontext";
 import api from "../services/api"; 
@@ -32,14 +32,18 @@ const Login = ({ setUser }) => {
 
       await fetchUserData();
 
-      if (user) {
-        navigate("/");
-      }
     } catch (err) {
-      console.error("Login error:", err)
+      console.error("Login error:", err);
       setError("Invalid email or password. Please try again.");
     }
   };
+
+  // UseEffect to navigate once user is updated
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   return (
     <div className="container">
