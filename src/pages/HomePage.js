@@ -1,24 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import api from "../services/api"; 
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/Authcontext";
 
 const HomePage = ({ darkMode }) => {
+  const {user} = useContext(AuthContext);
   const [portfolios, setPortfolios] = useState([]);
-  const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2fQ.-XdcSMywrlroe_kS3juSFq7T1vD3c14XhaOgkQrCPMY";
 
   useEffect(() => {
     const fetchPortfolios = async () => {
+      if (!user) return;
+
       try {
-        const response = await api.get(`/portfolios`, {
-          headers: { Authorization: `Bearer ${token}` },
+        const response = await api.get("/api/v1/portfolios", {
+          headers: {
+            "access-token": localStorage.getItem("access-token"),
+            "client": localStorage.getItem("client"),
+            "uid": localStorage.getItem("uid"),
+          },
         });
         setPortfolios(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching portfolios:", error);
       }
     };
     fetchPortfolios();
-  }, [token]);
+  }, [user]);
 
   return (
     <div className="container mt-4">
