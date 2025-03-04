@@ -9,14 +9,25 @@ const PortfolioPage = ({ darkMode }) => {
   const [portfolio, setPortfolio] = useState(null);
   const [assets, setAssets] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  
-  const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2fQ.-XdcSMywrlroe_kS3juSFq7T1vD3c14XhaOgkQrCPMY";
 
+  const token = localStorage.getItem("access-token");
+  const client = localStorage.getItem("client");
+  const uid = localStorage.getItem("uid");
+  
   useEffect(() => {
     const fetchPortfolio = async () => {
+      if (!token || !client || !uid) {
+        console.error("Missing authentication details.");
+        return;
+      }
+
       try {
         const response = await api.get(`/portfolios/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {
+            "access-token": token,
+            "client": client,
+            "uid": uid,
+          },
         });
         setPortfolio(response.data);
       } catch (error) {
@@ -24,14 +35,23 @@ const PortfolioPage = ({ darkMode }) => {
       }
     };
     fetchPortfolio();
-  }, [id]);
+  }, [id, token, client, uid]);
 
   useEffect(() => {
     if (portfolio) {
       const fetchAssets = async () => {
+        if (!token || !client || !uid) {
+          console.error("Missing authentication details.");
+          return;
+        }
+
         try {
           const response = await api.get(`/portfolios/${id}/assets`, {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+              "access-token": token,
+              "client": client,
+              "uid": uid,
+            },
           });
           setAssets(response.data);
         } catch (error) {
@@ -40,14 +60,23 @@ const PortfolioPage = ({ darkMode }) => {
       };
       fetchAssets();
     }
-  }, [id, portfolio]); 
+  }, [id, portfolio, token, client, uid]); 
 
   const handleCreateAsset = async (newAsset) => {
     setErrorMessage("");
 
+    if (!token || !client || !uid) {
+      setErrorMessage("Missing authentication details.");
+      return;
+    }
+
     try {
       const response = await api.post(`/portfolios/${id}/assets`, newAsset, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          "access-token": token,
+          "client": client,
+          "uid": uid,
+        },
       });
 
       setAssets([...assets, response.data]);
@@ -62,13 +91,21 @@ const PortfolioPage = ({ darkMode }) => {
   };
 
   const handleDeleteAsset = async (assetId) => {
+    if (!token || !client || !uid) {
+      setErrorMessage("Missing authentication details.");
+      return;
+    }
+
     try {
       const response = await api.delete(`/portfolios/${id}/assets/${assetId}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          "access-token": token,
+          "client": client,
+          "uid": uid,
+        },
       });
-  
+
       setAssets(assets.filter((asset) => asset.id !== assetId));
-  
     } catch (error) {
       console.error("Error deleting asset:", error);
     }
