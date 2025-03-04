@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/Authcontext";
 import "./NavBar.css";
@@ -8,7 +8,7 @@ const NavBar = ({ darkMode, setDarkMode }) => {
 
   useEffect(() => {
     fetchUserData();
-  }, []);
+  }, [fetchUserData]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
