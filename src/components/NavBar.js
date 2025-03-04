@@ -17,7 +17,7 @@ const NavBar = ({ darkMode, setDarkMode }) => {
  
   return (
     <nav className="navbar d-flex flex-row justify-content-start p-2 bg-dark text-white">
-      <Link to="/">Home</Link>
+      <Link to="/" className="ms-3">Home</Link>
 
       {user ? (
         <>
