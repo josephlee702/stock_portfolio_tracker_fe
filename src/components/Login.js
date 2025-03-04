@@ -1,23 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/Authcontext";
 import api from "../services/api"; 
 
 const Login = ({ setUser }) => {
+  const { fetchUserData } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
-      const response = await api.post("/login", { email, password });
+      const response = await api.post("/auth/sign_in", { email, password });
 
-      localStorage.setItem("token", response.data.token);
-      setUser(email);
-      navigate("/login");
+      const { "access-token": accessToken, client, uid, "token-type": tokenType, expiry } = response.headers;
+
+      if (accessToken && client && uid) {
+        localStorage.setItem("access-token", accessToken);
+        localStorage.setItem("client", client);
+        localStorage.setItem("uid", uid);
+        localStorage.setItem("expiry", expiry);
+        localStorage.setItem("token-type", tokenType);
+      } else {
+        console.error("Tokens missing in response headers");
+      }
+
+      await fetchUserData();
+
+      if (user) {
+        navigate("/");
+      }
     } catch (err) {
       console.error("Login error:", err)
       setError("Invalid email or password. Please try again.");
