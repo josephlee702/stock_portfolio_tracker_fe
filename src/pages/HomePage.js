@@ -12,7 +12,7 @@ const HomePage = ({ darkMode }) => {
       if (!user) return;
 
       try {
-        const response = await api.get("/api/v1/portfolios", {
+        const response = await api.get("/portfolios", {
           headers: {
             "access-token": localStorage.getItem("access-token"),
             "client": localStorage.getItem("client"),
