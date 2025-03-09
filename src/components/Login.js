@@ -30,7 +30,9 @@ const Login = ({ setUser }) => {
         console.error("Tokens missing in response headers");
       }
 
+      if (!user) {
       await fetchUserData();
+    }
 
     } catch (err) {
       console.error("Login error:", err);
@@ -38,7 +40,6 @@ const Login = ({ setUser }) => {
     }
   };
 
-  // UseEffect to navigate once user is updated
   useEffect(() => {
     if (user) {
       navigate("/");

@@ -9,24 +9,19 @@ const HomePage = ({ darkMode }) => {
 
   useEffect(() => {
     const fetchPortfolios = async () => {
-      if (!user) return;
-
+      if (!user || portfolios.length > 0) return;
+  
       try {
-        const response = await api.get("/portfolios", {
-          headers: {
-            "access-token": localStorage.getItem("access-token"),
-            "client": localStorage.getItem("client"),
-            "uid": localStorage.getItem("uid"),
-          },
-        });
+        const response = await api.get("/portfolios");
         setPortfolios(response.data);
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching portfolios:", error);
       }
     };
-    fetchPortfolios();
+    // fetchPortfolios();
   }, [user]);
+  
 
   return (
     <div className="container mt-4">

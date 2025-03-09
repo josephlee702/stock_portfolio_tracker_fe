@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     const uid = localStorage.getItem("uid");
 
     if (!accessToken || !client || !uid) {
-      setUser(null);
+      if (user) setUser(null);
       return;
     }
 
@@ -31,23 +31,26 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (response.data.success) {
-        setUser(response.data.data);
+        if (!user || user.id !== response.data.data.id) {
+          setUser(response.data.data);
+        }
       } else {
-        setUser(null);
+        if (user) setUser(null);
         localStorage.clear();
       }
     } catch (error) {
       console.error("Could not fetch user data", error);
-      setUser(null);
+      if (user) setUser(null);
       localStorage.clear();
     }
   };
 
   useEffect(() => {
-    if (localStorage.getItem("access-token")) {
+    if (!user && localStorage.getItem("access-token")) {
       fetchUserData();
     }
-  }, []);
+  }, [user]);
+  
 
   return (
     <AuthContext.Provider value={{ user, fetchUserData }}>
